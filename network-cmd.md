@@ -14,6 +14,14 @@
   ovs-vsctl add-port br-int aa -- set Interface aa type=internal
   ovs-vsctl add-port br-int vxlan0 -- set interface vxlan0 type=vxlan options:remote_ip=172.168.1.2
 ```
+## ovs-vsctl commands
+### patch ports
+```
+ovs-vsctl -- add-port br0 patch0 -- set interface patch0 type=patch options:peer=patch1 \
+    -- add-port br1 patch1 \
+    -- set interface patch1 type=patch options:peer=patch0
+```
+After the above commands, br0 and br1 can communicate with each other. 
 ## ovs-ofctl commands
 ```
   ovs-ofctl dump-ports  //display all information abou the ports
