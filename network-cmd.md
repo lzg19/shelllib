@@ -57,7 +57,38 @@ ovs-appctl tnl/egress_port_range
 ovs-appctl dpif/show
 ovs-appctl dpif/dump-flows
 ```
-  
+## test
+### rspan and span test
+```
+ovs-vsctl add-br helloworld
+ip link add first_br type veth peer name first_if
+ip link add second_br type veth peer name second_if
+ip link add third_br type veth peer name third_if
+ovs-vsctl add-br ubuntu-br
+ovs-vsctl add-port ubuntu-br first_br
+ovs-vsctl add-port ubuntu-br second_br -- set port second_br tag=110
+ovs-vsctl add-port ubuntu-br third_br -- set port third_br tag=110
+ovs-vsctl show
+ip link add vnet0 type veth peer name veth0b
+ip link add vnet1 type veth peer name veth1b
+ip link add vnet2 type veth peer name veth2b
+ip netns add vm1
+ip netns add vm2
+ip netns add vm3
+ip netns list
+ip link set veth0b netns vm1
+ip link set veth1b netns vm2
+ip link set veth2b netns vm3
+ip netns exec vm1 ifconfig -a
+ip netns exec vm1
+ip netns exec vm1 bash
+ip netns exec vm0 bash
+ip netns exec vm2 bash
+ip netns exec vm3 bash
+ovs-vsctl add-port ubuntu-br vnet0
+ovs-vsctl add-port ubuntu-br vnet1
+ovs-vsctl add-port ubuntu-br vnet2
+```
   
 
   
