@@ -8,6 +8,12 @@
   ip addr add 192.168.100.0/24 dev veth0
 ```
 # openvswitch command
+## start the ovsdb-server and vswitch-d
+```
+sudo ovsdb-server --remote=punix:/usr/local/var/run/openvswitch/db.sock --remote=db:Open_vSwitch,Open_vSwitch,manager_options --pidfile --detach
+sudo ovs-vsctl --no-wait init
+sudo ovs-vswitchd --pidfile --detach
+```
 ## baisc commands
 ```
   ovs-vsctl add-br br-int -- set Bridge br-int datapath_type=netdev
